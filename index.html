@@ -3,101 +3,191 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Google Sheet Click Logger</title>
-    <!-- Load Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Use Inter Font -->
-    <style>
-        body { font-family: 'Inter', sans-serif; }
+    <title>UM2 Connect - Invitation</title>
+    <!-- Load Tailwind CSS --><script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- High-Contrast, Minimalist Aesthetic --><style>
+        /* High Contrast Black/White Palette */
+        body { 
+            font-family: ui-sans-serif, system-ui, sans-serif; 
+            background-color: #ffffff; /* Pure White */
+            color: #000000; /* Pure Black */
+            min-height: 200vh; /* Ensure there is enough space to scroll */
+            scroll-behavior: smooth;
+        }
+
+        /* Animation Classes */
+        /* Removed initial hidden state for easier viewing/debugging */
+        .fade-in-up {
+            /* opacity: 0; */ 
+            transform: translateY(2rem);
+            transition: opacity 1s ease-out, transform 1s ease-out;
+        }
+        .in-view {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Custom scroll down indicator bounce */
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-10px);
+            }
+            60% {
+                transform: translateY(-5px);
+            }
+        }
+        .bounce-animation {
+            animation: bounce 2s infinite;
+        }
     </style>
     
     <script>
-        // Paste your deployed Google Apps Script Web App URL here.
+        // CRITICAL: The endpoint URL pointing to your deployed Google Apps Script Web App.
         const SHEET_ENDPOINT = "https://script.google.com/macros/s/AKfycbw8OcFvg7s1FpNjUqPwPaGxcle_tUVCVVaf5p5_Kb3secqPP_bmOqSu5s3DpoJrNWfSQg/exec";
         
         /**
          * Logs the button click result by calling the Google Apps Script endpoint via GET (no-cors).
-         * @param {string} result - The click result ('YES' or 'NO').
          */
         async function logClick(result) {
             const statusEl = document.getElementById('status-message');
+            const buttonContainer = document.getElementById('button-container');
             
-            // Only proceed with the network request if it's the 'YES' button, 
-            // as the Apps Script is hardcoded to log 'YES'.
             if (result !== 'YES') {
-                statusEl.textContent = "🚫 Action Skipped: Your Apps Script is only configured to log 'YES' responses.";
+                statusEl.textContent = "Thank you for considering. We hope to see you next time.";
                 return;
             }
 
-            statusEl.textContent = `Sending '${result}' result via GET (no-cors) to Google Sheet...`;
+            // Disable buttons during submission
+            buttonContainer.querySelectorAll('button').forEach(btn => btn.disabled = true);
+            statusEl.textContent = `Submitting response...`;
 
             try {
-                // *** FIX: Reverting to GET method with 'no-cors' mode to bypass the 'Failed to fetch' CORS error. ***
-                const response = await fetch(SHEET_ENDPOINT, { 
-                    method: 'GET', 
-                    mode: 'no-cors' // Crucial for cross-origin requests to Apps Script from this environment
+                // Using fetch with no-cors to bypass security checks, relying on server-side CORS fix.
+                await fetch(SHEET_ENDPOINT, { 
+                    method: 'GET', // Use GET as configured in Code.gs
+                    mode: 'no-cors' 
                 }); 
                 
-                // Note: We cannot check response.ok in 'no-cors' mode. This confirms the network request was initiated successfully.
-                statusEl.textContent = `✅ Success: '${result}' click sent via GET! Please check your Google Sheet.`;
+                // The network request was sent successfully.
+                statusEl.textContent = `✅ RSVP Confirmed! Thank you for joining UM2 Connect.`;
                 
             } catch (e) {
-                // This catch block handles catastrophic network errors (which is what you observed).
-                statusEl.textContent = `❌ Network Error: Failed to initiate connection. Your browser blocked the request. Please apply the Apps Script CORS fix (see chat).`;
+                // This usually only catches catastrophic network failures.
+                statusEl.textContent = `❌ Error: Failed to send RSVP. Check console for network details.`;
                 console.error("Network error during fetch:", e);
+            } finally {
+                // Re-enable buttons if submission failed, or keep disabled if successful
+                if (!statusEl.textContent.includes('✅')) {
+                     buttonContainer.querySelectorAll('button').forEach(btn => btn.disabled = false);
+                }
             }
         }
 
-        // Expose the function globally so the HTML buttons can call it
-        window.logClick = logClick;
-        
-        // Initial status message setup
+        // --- Intersection Observer for Scroll Animation ---
         document.addEventListener('DOMContentLoaded', () => {
-            document.getElementById('status-message').textContent = "Ready to log clicks to Google Sheet endpoint using GET (no-cors).";
+            const storySection = document.getElementById('what-is-um2-connect-section'); // Updated ID
+
+            // Set up the observer
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        // Element is in view, apply the animation class
+                        // NOTE: Since fade-in-up is commented out in CSS, this primarily adds opacity: 1 
+                        // and ensures the content is fully visible if any hiding persists.
+                        entry.target.classList.add('in-view'); 
+                        // Stop observing once the animation is triggered
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                rootMargin: '0px',
+                threshold: 0.1 // Trigger when 10% of the element is visible
+            });
+
+            // Start observing the new section
+            if (storySection) {
+                observer.observe(storySection);
+            }
         });
     </script>
 </head>
 
-<body class="bg-gray-50 min-h-screen p-4 sm:p-8">
+<body>
 
-    <div class="max-w-xl mx-auto bg-white shadow-2xl rounded-xl p-6 sm:p-10 border border-gray-100">
-
-        <h1 class="text-3xl font-extrabold text-gray-900 mb-2 border-b pb-2">
-            Google Sheets Click Logger Test
-        </h1>
-        <p class="text-gray-500 mb-6">
-            Click the **YES** button below. This will send a **GET** request directly to your deployed Apps Script URL, using the most permissive settings to avoid browser blocking.
-        </p>
-
-        <!-- Status Message -->
-        <div class="bg-blue-50 border-l-4 border-blue-400 p-4 mb-6 rounded-lg">
-            <p id="status-message" class="mt-1 text-blue-700 font-semibold">
-                Ready to log clicks to Google Sheet endpoint using GET (no-cors).
+    <!-- 1. HERO SECTION: Full Width, Center Aligned, High Contrast (Matching Previous Screenshot) --><header id="hero" class="w-full min-h-screen flex flex-col justify-center items-center text-center p-6 bg-white text-black">
+        <div class="space-y-4 sm:space-y-6">
+            <!-- Subtitle --><p class="text-base sm:text-lg font-light tracking-wide text-gray-700">The Growing Blessings</p>
+            
+            <!-- Main Title (Large, Normal Weight) --><h1 class="text-6xl sm:text-8xl md:text-9xl font-normal leading-tight tracking-tight">
+                UM2<br>Connect
+            </h1>
+            
+            <!-- Tagline (Small, centered) --><p class="text-sm sm:text-base font-normal max-w-xs mx-auto pt-4 text-gray-800">
+                A invitation to align vision and forge new pathways forward.
             </p>
         </div>
-
-        <!-- Button Section -->
-        <div class="grid grid-cols-2 gap-4 mt-8">
-            <button id="btn-yes" onclick="logClick('YES')" 
-                    class="w-full py-4 text-white font-bold text-lg rounded-lg shadow-lg 
-                           bg-green-600 hover:bg-green-700 transition duration-150 transform hover:scale-[1.02] 
-                           focus:outline-none focus:ring-4 focus:ring-green-500 focus:ring-opacity-50">
-                YES (Logs to Sheet)
-            </button>
-
-            <button id="btn-no" onclick="logClick('NO')" 
-                    class="w-full py-4 text-white font-bold text-lg rounded-lg shadow-lg 
-                           bg-red-600 hover:bg-red-700 transition duration-150 transform hover:scale-[1.02] 
-                           focus:outline-none focus:ring-4 focus:ring-red-500 focus:ring-opacity-50">
-                NO (Test Click)
-            </button>
-        </div>
         
-        <p class="text-center text-sm text-gray-400 mt-6">
-            After clicking YES, check the Network tab in your browser's Developer Tools to see the request status.
-        </p>
+        <!-- Scroll Down Indicator (at the very bottom) --><a href="#what-is-um2-connect-section" class="absolute bottom-10 flex flex-col items-center cursor-pointer hover:text-gray-700 transition duration-150">
+            <p class="text-base tracking-widest text-black mb-2">Scroll Down</p>
+            <svg class="w-6 h-6 text-black bounce-animation" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+            </svg>
+        </a>
+    </header>
 
-    </div>
+    <!-- 2. "WHAT IS UM2 CONNECT" SECTION: Text and Image Grid (Matching New Screenshot) --><section id="what-is-um2-connect-section" class="py-24 sm:py-32 w-full bg-white">
+        <!-- REMOVED: fade-in-up class from the div below to ensure content is visible immediately -->
+        <div id="what-is-um2-connect-content" class="max-w-4xl mx-auto px-6 text-center">
+            
+            <h2 class="text-4xl sm:text-5xl font-extrabold text-black mb-8 leading-tight">What is UM2 Connect</h2>
+            <p class="text-lg leading-relaxed mb-12 text-gray-800 max-w-2xl mx-auto">
+                WE GROW, WE LAUGH, AND WE HOLD SPACE FOR ONE ANOTHER. IN THE MIDDLE 
+                OF BUSY SCHOOL DAYS AND OVERWHELMING ASSESSMENTS, UM2 CONNECT 
+                BECOMES OUR LITTLE REFUGE. A PLACE WHERE STRESS MELTS AWAY, 
+                REPLACED BY SMILES, SHARED PRAYERS, AND GENUINE CONNECTION.
+            </p>
+
+            <!-- Image Grid --><div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 border-4 border-dashed border-gray-300 p-4"> <!-- Added border for visibility check -->
+                <!-- The image path below requires the file to exist on the server at /img/IMG_0003.jpg -->
+                <div><img src="/img/IMG_0003.jpg" alt="UM2 Connect Group Photo 1" class="w-full h-auto object-cover rounded-lg shadow-md"></div>
+                <div><img src="/img/IMG_0003.jpg" alt="UM2 Connect Group Photo 2" class="w-full h-auto object-cover rounded-lg shadow-md"></div>
+                <div><img src="/img/IMG_0003.jpg" alt="UM2 Connect Group Photo 3" class="w-full h-auto object-cover rounded-lg shadow-md"></div>
+                </div>
+
+        </div>
+    </section>
+
+    <!-- 3. ACTION SECTION: Final Decision and Buttons --><section id="action-section" class="py-20 bg-gray-50 w-full border-t border-gray-200">
+        <div class="max-w-3xl mx-auto px-6 text-center">
+            <h2 class="text-4xl font-extrabold text-black mb-12">Will you join on this connect?</h2>
+
+            <!-- Status Message --><div class="bg-blue-50 border-l-4 border-blue-400 p-4 mb-8 rounded-lg shadow-md">
+                <p id="status-message" class="mt-1 text-blue-700 font-semibold">
+                    Please click YES or NO to submit your attendance.
+                </p>
+            </div>
+
+            <!-- Button Section --><div id="button-container" class="grid grid-cols-2 gap-6 max-w-sm mx-auto">
+                <button id="btn-yes" onclick="logClick('YES')" 
+                        class="w-full py-4 text-white font-bold text-xl rounded-lg shadow-lg 
+                               bg-black hover:bg-gray-800 transition duration-300 transform hover:scale-[1.05] 
+                               focus:outline-none focus:ring-4 focus:ring-black focus:ring-opacity-70 uppercase tracking-wider">
+                    YES, I will join
+                </button>
+
+                <button id="btn-no" onclick="logClick('NO')" 
+                        class="w-full py-4 text-black font-bold text-xl rounded-lg border-2 border-black shadow-lg 
+                               bg-white hover:bg-gray-100 transition duration-300 transform hover:scale-[1.05] 
+                               focus:outline-none focus:ring-4 focus:ring-gray-500 focus:ring-opacity-50 uppercase tracking-wider">
+                    NO
+                </button>
+            </div>
+        </div>
+    </section>
 
 </body>
 </html>
