@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Sheet Click Logger</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Use Inter Font -->
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+    
+    <script>
+        // Paste your deployed Google Apps Script Web App URL here.
+        const SHEET_ENDPOINT = "https://script.google.com/macros/s/AKfycbw8OcFvg7s1FpNjUqPwPaGxcle_tUVCVVaf5p5_Kb3secqPP_bmOqSu5s3DpoJrNWfSQg/exec";
+        
+        /**
+         * Logs the button click result by calling the Google Apps Script endpoint via GET (no-cors).
+         * @param {string} result - The click result ('YES' or 'NO').
+         */
+        async function logClick(result) {
+            const statusEl = document.getElementById('status-message');
+            
+            // Only proceed with the network request if it's the 'YES' button, 
+            // as the Apps Script is hardcoded to log 'YES'.
+            if (result !== 'YES') {
+                statusEl.textContent = "🚫 Action Skipped: Your Apps Script is only configured to log 'YES' responses.";
+                return;
+            }
+
+            statusEl.textContent = `Sending '${result}' result via GET (no-cors) to Google Sheet...`;
+
+            try {
+                // *** FIX: Reverting to GET method with 'no-cors' mode to bypass the 'Failed to fetch' CORS error. ***
+                const response = await fetch(SHEET_ENDPOINT, { 
+                    method: 'GET', 
+                    mode: 'no-cors' // Crucial for cross-origin requests to Apps Script from this environment
+                }); 
+                
+                // Note: We cannot check response.ok in 'no-cors' mode. This confirms the network request was initiated successfully.
+                statusEl.textContent = `✅ Success: '${result}' click sent via GET! Please check your Google Sheet.`;
+                
+            } catch (e) {
+                // This catch block handles catastrophic network errors (which is what you observed).
+                statusEl.textContent = `❌ Network Error: Failed to initiate connection. Your browser blocked the request. Please apply the Apps Script CORS fix (see chat).`;
+                console.error("Network error during fetch:", e);
+            }
+        }
+
+        // Expose the function globally so the HTML buttons can call it
+        window.logClick = logClick;
+        
+        // Initial status message setup
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('status-message').textContent = "Ready to log clicks to Google Sheet endpoint using GET (no-cors).";
+        });
+    </script>
+</head>
+
+<body class="bg-gray-50 min-h-screen p-4 sm:p-8">
+
+    <div class="max-w-xl mx-auto bg-white shadow-2xl rounded-xl p-6 sm:p-10 border border-gray-100">
+
+        <h1 class="text-3xl font-extrabold text-gray-900 mb-2 border-b pb-2">
+            Google Sheets Click Logger Test
+        </h1>
+        <p class="text-gray-500 mb-6">
+            Click the **YES** button below. This will send a **GET** request directly to your deployed Apps Script URL, using the most permissive settings to avoid browser blocking.
+        </p>
+
+        <!-- Status Message -->
+        <div class="bg-blue-50 border-l-4 border-blue-400 p-4 mb-6 rounded-lg">
+            <p id="status-message" class="mt-1 text-blue-700 font-semibold">
+                Ready to log clicks to Google Sheet endpoint using GET (no-cors).
+            </p>
+        </div>
+
+        <!-- Button Section -->
+        <div class="grid grid-cols-2 gap-4 mt-8">
+            <button id="btn-yes" onclick="logClick('YES')" 
+                    class="w-full py-4 text-white font-bold text-lg rounded-lg shadow-lg 
+                           bg-green-600 hover:bg-green-700 transition duration-150 transform hover:scale-[1.02] 
+                           focus:outline-none focus:ring-4 focus:ring-green-500 focus:ring-opacity-50">
+                YES (Logs to Sheet)
+            </button>
+
+            <button id="btn-no" onclick="logClick('NO')" 
+                    class="w-full py-4 text-white font-bold text-lg rounded-lg shadow-lg 
+                           bg-red-600 hover:bg-red-700 transition duration-150 transform hover:scale-[1.02] 
+                           focus:outline-none focus:ring-4 focus:ring-red-500 focus:ring-opacity-50">
+                NO (Test Click)
+            </button>
+        </div>
+        
+        <p class="text-center text-sm text-gray-400 mt-6">
+            After clicking YES, check the Network tab in your browser's Developer Tools to see the request status.
+        </p>
+
+    </div>
+
+</body>
+</html>
