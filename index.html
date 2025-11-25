@@ -110,7 +110,7 @@
             } catch (e) {
                 // This usually only catches catastrophic network failures.
                 statusEl.textContent = `❌ Error: Failed to send RSVP. Check console for network details.`;
-                console.error("Network error during fetch:", e);
+                console.error("error during fetch:", e);
             } finally {
                 // Re-enable buttons if submission failed, or keep disabled if successful
                 if (!statusEl.textContent.includes('✅')) {
@@ -151,10 +151,10 @@
 
     <!-- 1. HERO SECTION: Full Width, Center Aligned, Christmas Theme --><header id="hero" class="w-full min-h-screen flex flex-col justify-center items-center text-center p-6 bg-amber-50 text-black">
         <div class="space-y-4 sm:space-y-6">
-            <!-- Subtitle --><p class="text-base sm:text-lg font-bold tracking-wide text-red-600 fade-in-up">The Holiday Connect</p>
+            <!-- Subtitle --><p class="text-base sm:text-lg font-bold tracking-wide text-red-600 fade-in-up">The Growing Blessings</p>
             
             <!-- Main Title (Colored Green) --><h1 class="text-6xl sm:text-8xl md:text-9xl font-normal leading-tight tracking-tight text-green-800 fade-in-up">
-                CHRISTMAS<br>UM2
+                UM2<br>CONNECT
             </h1>
             
             <!-- Tagline (Red Text) --><p class="text-sm sm:text-base font-normal max-w-xs mx-auto pt-4 text-red-600 fade-in-up">
@@ -172,6 +172,7 @@
 
     <!-- 2. ACTION SECTION: Final Decision, Poster, and Buttons --><section id="action-section" class="py-20 bg-white w-full border-t border-red-300">
         <div class="max-w-3xl mx-auto px-6 text-center">
+
             
             <!-- MODIFIED: Invitation Card/Message --><div class="mb-10 p-8 bg-white rounded-3xl shadow-2xl fade-in-up border border-gray-100">
                 <!-- Decorative Header --><div class="mb-6 pb-4 border-b border-red-200">
@@ -184,10 +185,6 @@
                     This is a special time dedicated to coming together to share love, joy, and the true meaning of Christmas.
                     We have planned an event of festive cheer and community spirit, perfect for unwinding before the year ends.
                 </p>
-                
-                <!-- Final Message Block --><p class="text-base text-gray-800 mt-8 leading-relaxed font-semibold text-center bg-green-50 p-3 rounded-lg border border-green-200">
-                    Let us celebrate the spirit of generosity, hope, and togetherness that defines this season. Your presence will make the event complete!
-                </p>
             </div>
 
             <!-- MOVED: A2 Size Poster Placeholder - Now a separate element --><div class="max-w-md w-full mx-auto mb-10 overflow-hidden rounded-lg shadow-xl aspect-a2 fade-in-up">
@@ -198,9 +195,9 @@
                 <img src="/img/UM2.png" alt="Christmas Invitation Poster" class="w-full h-full object-cover">
             </div>
 
-            <!-- Status Message (Christmas Red Theme) --><div class="bg-red-100 border-l-4 border-red-600 p-4 mb-8 rounded-lg shadow-md fade-in-up">
-                <p id="status-message" class="mt-1 text-red-800 font-semibold">
-                    Please click YES or NO to confirm your festive attendance!
+            <!-- Status Message (Christmas Green Theme) --><div class="bg-green-100 border-l-4 border-green-600 p-4 mb-8 rounded-lg shadow-md fade-in-up">
+                <p id="status-message" class="mt-1 text-green-800 font-semibold">
+                    Are you ready for some Christmas joy? Let us know if you can join us
                 </p>
             </div>
 
