@@ -3,22 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UM2 Connect - Invitation</title>
+    <title>UM2 Connect - Christmas Invitation</title>
+    <!-- Load Google Fonts: Montserrat (for titles) and Roboto (for body) --><link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
     <!-- Load Tailwind CSS --><script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- High-Contrast, Minimalist Aesthetic --><style>
-        /* High Contrast Black/White Palette */
+    <!-- Christmas Theme, Minimalist Aesthetic and Custom Fonts --><style>
+        /* Define Font Variables */
+        :root {
+            --font-heading: 'Montserrat', sans-serif;
+            --font-body: 'Roboto', sans-serif;
+            /* Christmas Palette */
+            --color-primary-green: #15803d; /* deep green */
+            --color-secondary-red: #dc2626; /* bright red */
+            --color-background-ivory: #fff7ed; /* warm ivory/amber-50 */
+        }
+
+        /* Apply Body Font and Christmas Background */
         body { 
-            font-family: ui-sans-serif, system-ui, sans-serif; 
-            background-color: #ffffff; /* Pure White */
-            color: #000000; /* Pure Black */
-            min-height: 200vh; /* Ensure there is enough space to scroll */
-            scroll-behavior: smooth; /* <-- ADDED: Smooth scroll for anchor links */
+            font-family: var(--font-body); 
+            background-color: var(--color-background-ivory); 
+            color: #000000; 
+            min-height: 100vh; /* Shorter content now */
+            scroll-behavior: smooth; 
+        }
+
+        /* Apply Heading Font explicitly to all H1 and H2 elements */
+        h1, h2 {
+            font-family: var(--font-heading); 
         }
 
         /* Animation Classes */
         .fade-in-up {
-            opacity: 0; /* <-- RE-ENABLED: Content starts hidden */ 
+            opacity: 0; 
             transform: translateY(2rem);
             transition: opacity 1s ease-out, transform 1s ease-out;
         }
@@ -41,6 +57,22 @@
         }
         .bounce-animation {
             animation: bounce 2s infinite;
+        }
+
+        /* Custom aspect ratio for A2 poster */
+        .aspect-a2 {
+            padding-bottom: 141.42%; /* A2 ratio is 1:1.4142 or 100:141.42 */
+            position: relative;
+            height: 0;
+            overflow: hidden;
+        }
+        .aspect-a2 img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: contain; /* or 'cover' depending on how you want it to fill */
         }
     </style>
     
@@ -117,95 +149,73 @@
 
 <body>
 
-    <!-- 1. HERO SECTION: Full Width, Center Aligned, High Contrast (Matching Previous Screenshot) --><header id="hero" class="w-full min-h-screen flex flex-col justify-center items-center text-center p-6 bg-white text-black">
+    <!-- 1. HERO SECTION: Full Width, Center Aligned, Christmas Theme --><header id="hero" class="w-full min-h-screen flex flex-col justify-center items-center text-center p-6 bg-amber-50 text-black">
         <div class="space-y-4 sm:space-y-6">
-            <!-- Subtitle --><p class="text-base sm:text-lg font-light tracking-wide text-gray-700 fade-in-up">The Growing Blessings</p>
+            <!-- Subtitle --><p class="text-base sm:text-lg font-bold tracking-wide text-red-600 fade-in-up">The Holiday Connect</p>
             
-            <!-- Main Title (Large, Normal Weight) --><h1 class="text-6xl sm:text-8xl md:text-9xl font-normal leading-tight tracking-tight fade-in-up">
-                UM2<br>Connect
+            <!-- Main Title (Colored Green) --><h1 class="text-6xl sm:text-8xl md:text-9xl font-normal leading-tight tracking-tight text-green-800 fade-in-up">
+                CHRISTMAS<br>UM2
             </h1>
             
-            <!-- Tagline (Small, centered) --><p class="text-sm sm:text-base font-normal max-w-xs mx-auto pt-4 text-gray-800 fade-in-up">
-                A invitation to align vision and forge new pathways forward.
+            <!-- Tagline (Red Text) --><p class="text-sm sm:text-base font-normal max-w-xs mx-auto pt-4 text-red-600 fade-in-up">
+                Join us for a time of joy, connection, and festive blessings!
             </p>
         </div>
         
-        <!-- Scroll Down Indicator (at the very bottom) --><a href="#what-is-um2-connect-section" class="absolute bottom-10 flex flex-col items-center cursor-pointer hover:text-gray-700 transition duration-150">
-            <p class="text-base tracking-widest text-black mb-2">Scroll Down</p>
-            <svg class="w-6 h-6 text-black bounce-animation" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <!-- Scroll Down Indicator --><a href="#action-section" class="absolute bottom-10 flex flex-col items-center cursor-pointer hover:text-green-700 transition duration-150">
+            <p class="text-base tracking-widest text-green-800 mb-2">RSVP Now</p>
+            <svg class="w-6 h-6 text-green-800 bounce-animation" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
             </svg>
         </a>
     </header>
 
-    <!-- 2. "WHAT IS UM2 CONNECT" SECTION: Text and Image Grid --><section id="what-is-um2-connect-section" class="py-24 sm:py-32 w-full bg-white">
-        <div id="what-is-um2-connect-content" class="max-w-4xl mx-auto px-6 text-center">
-            
-            <h2 class="text-4xl sm:text-5xl font-extrabold text-black mb-8 leading-tight fade-in-up">What is UM2 Connect</h2>
-            <p class="text-lg leading-relaxed mb-12 text-gray-800 max-w-2xl mx-auto fade-in-up">
-                WE GROW, WE LAUGH, AND WE HOLD SPACE FOR ONE ANOTHER. IN THE MIDDLE 
-                OF BUSY SCHOOL DAYS AND OVERWHELMING ASSESSMENTS, UM2 CONNECT 
-                BECOMES OUR LITTLE REFUGE. A PLACE WHERE STRESS MELTS AWAY, 
-                REPLACED BY SMILES, SHARED PRAYERS, AND GENUINE CONNECTION.
-            </p>
-
-            <!-- Image Grid (Border Removed) --><div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 fade-in-up"> 
-                <!-- The image path below requires the file to exist on the server at /img/IMG_0003.jpg -->
-                <div><img src="/img/photo1.jpg" alt="UM2 Connect Group Photo 1" class="w-full h-auto object-cover rounded-lg shadow-md"></div>
-                <div><img src="/img/photo2.jpeg" alt="UM2 Connect Group Photo 2" class="w-full h-auto object-cover rounded-lg shadow-md"></div>
-                <div><img src="/img/photo3.jpg" alt="UM2 Connect Group Photo 3" class="w-full h-auto object-cover rounded-lg shadow-md"></div>
-                </div>
-
-        </div>
-    </section>
-    
-    <!-- 3. NEW COMMUNITY SECTION: Duplicate style of section 2 --><section id="community-section" class="py-24 sm:py-32 w-full bg-gray-50 border-t border-gray-200">
-        <div id="community-content" class="max-w-4xl mx-auto px-6 text-center">
-            
-            <h2 class="text-4xl sm:text-5xl font-extrabold text-black mb-8 leading-tight fade-in-up">What We Values</h2>
-            <p class="text-lg leading-relaxed mb-12 text-gray-800 max-w-2xl mx-auto fade-in-up">
-                WE PLAY GAMES, SHARE SIMPLE JOYS, AND BUILD REAL FRIENDSHIPS THAT GO BEYOND THE CLASSROOM. 
-                WE LISTEN WITHOUT JUDGMENT, WE PRAY WITH HOPE, AND WE BOND WITH KINDNESS. 
-                HERE, EVERYONE IS WELCOMED WITH OPEN ARMS AND OPEN HEARTS - NO PRESSURE, 
-                NO EXPECTATIONS, JUST PRESENCE.
-            </p>
-
-            <!-- Image Grid (3 Photos, Border Removed) --><div class="grid grid-cols-1 sm:grid-cols-3 gap-6 fade-in-up"> 
-                <!-- The image path below requires the file to exist on the server at /img/IMG_0003.jpg -->
-                <div><img src="/img/photo6.jpg" alt="Community Photo 1" class="w-full h-auto object-cover rounded-lg shadow-md"></div>
-                <div><img src="/img/photo5.jpg" alt="Community Photo 2" class="w-full h-auto object-cover rounded-lg shadow-md"></div>
-                <div><img src="/img/photo4.jpg" alt="Community Photo 3" class="w-full h-auto object-cover rounded-lg shadow-md"></div>
-                </div>
-
-        </div>
-    </section>
-
-    <!-- 4. ACTION SECTION: Final Decision and Buttons --><section id="action-section" class="py-20 bg-white w-full border-t border-gray-200">
+    <!-- 2. ACTION SECTION: Final Decision, Poster, and Buttons --><section id="action-section" class="py-20 bg-white w-full border-t border-red-300">
         <div class="max-w-3xl mx-auto px-6 text-center">
-            <h2 class="text-4xl font-extrabold text-black mb-12 fade-in-up">Will you join on this connect?</h2>
             
-            <!-- NEW: Invitation Poster Placeholder (1:1 Aspect Ratio) --><div class="max-w-sm w-full mx-auto mb-10 overflow-hidden rounded-xl shadow-2xl aspect-square fade-in-up border border-gray-100">
-                <img src="/img/UM2.png" alt="Invitation Poster" class="w-full h-full object-cover">
-            </div>
+            <!-- MODIFIED: Invitation Card/Message --><div class="mb-10 p-8 bg-white rounded-3xl shadow-2xl fade-in-up border border-gray-100">
+                <!-- Decorative Header --><div class="mb-6 pb-4 border-b border-red-200">
+                    <span class="text-4xl text-green-700 leading-none">🎄</span>
+                    <h3 class="text-3xl font-extrabold text-red-600 mt-2">UM2 Christmas Connect</h3>
+                </div>
 
-            <!-- Status Message --><div class="bg-blue-50 border-l-4 border-blue-400 p-4 mb-8 rounded-lg shadow-md fade-in-up">
-                <p id="status-message" class="mt-1 text-blue-700 font-semibold">
-                    Please click YES or NO to submit your attendance.
+                <p class="text-lg text-gray-800 mb-6 leading-relaxed text-left">
+                    Dear UM2 students, the festive season is upon us, and we warmly invite you to join us for our annual Christmas event! 
+                    This is a special time dedicated to coming together to share love, joy, and the true meaning of Christmas.
+                    We have planned an event of festive cheer and community spirit, perfect for unwinding before the year ends.
+                </p>
+                
+                <!-- Final Message Block --><p class="text-base text-gray-800 mt-8 leading-relaxed font-semibold text-center bg-green-50 p-3 rounded-lg border border-green-200">
+                    Let us celebrate the spirit of generosity, hope, and togetherness that defines this season. Your presence will make the event complete!
                 </p>
             </div>
 
-            <!-- Button Section --><div id="button-container" class="grid grid-cols-2 gap-6 max-w-sm mx-auto fade-in-up">
+            <!-- MOVED: A2 Size Poster Placeholder - Now a separate element --><div class="max-w-md w-full mx-auto mb-10 overflow-hidden rounded-lg shadow-xl aspect-a2 fade-in-up">
+                <img src="/img/poster2.png" alt="Christmas Event Poster" class="w-full h-full object-contain">
+            </div>
+            
+            <!-- Original Invitation Poster Placeholder (1:1 Aspect Ratio) --><div class="max-w-sm w-full mx-auto mb-10 overflow-hidden rounded-xl shadow-2xl aspect-square fade-in-up">
+                <img src="/img/UM2.png" alt="Christmas Invitation Poster" class="w-full h-full object-cover">
+            </div>
+
+            <!-- Status Message (Christmas Red Theme) --><div class="bg-red-100 border-l-4 border-red-600 p-4 mb-8 rounded-lg shadow-md fade-in-up">
+                <p id="status-message" class="mt-1 text-red-800 font-semibold">
+                    Please click YES or NO to confirm your festive attendance!
+                </p>
+            </div>
+
+            <!-- Button Section (Christmas Colors) --><div id="button-container" class="grid grid-cols-2 gap-6 max-w-sm mx-auto fade-in-up">
                 <button id="btn-yes" onclick="logClick('YES')" 
                         class="w-full py-4 text-white font-bold text-xl rounded-lg shadow-lg 
-                               bg-black hover:bg-gray-800 transition duration-300 transform hover:scale-[1.05] 
-                               focus:outline-none focus:ring-4 focus:ring-black focus:ring-opacity-70 uppercase tracking-wider">
+                               bg-green-700 hover:bg-green-600 transition duration-300 transform hover:scale-[1.05] 
+                               focus:outline-none focus:ring-4 focus:ring-green-700 focus:ring-opacity-70 uppercase tracking-wider">
                     YES, I will join
                 </button>
 
                 <button id="btn-no" onclick="logClick('NO')" 
-                        class="w-full py-4 text-black font-bold text-xl rounded-lg border-2 border-black shadow-lg 
-                               bg-white hover:bg-gray-100 transition duration-300 transform hover:scale-[1.05] 
-                               focus:outline-none focus:ring-4 focus:ring-gray-500 focus:ring-opacity-50 uppercase tracking-wider">
+                        class="w-full py-4 font-bold text-xl rounded-lg border-2 border-green-700 shadow-lg 
+                               text-green-700 bg-white hover:bg-green-50 transition duration-300 transform hover:scale-[1.05] 
+                               focus:outline-none focus:ring-4 focus:ring-green-500 focus:ring-opacity-50 uppercase tracking-wider">
                     NO
                 </button>
             </div>
