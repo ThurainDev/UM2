@@ -151,9 +151,9 @@
 
     <!-- 1. HERO SECTION: Full Width, Center Aligned, Christmas Theme --><header id="hero" class="w-full min-h-screen flex flex-col justify-center items-center text-center p-6 bg-amber-50 text-black">
         <div class="space-y-4 sm:space-y-6">
-            <!-- Subtitle --><p class="text-base sm:text-lg font-bold tracking-wide text-red-600 fade-in-up">The Growing Blessings</p>
+            <!-- Subtitle (Restored to "The Growing Blessings") --><p class="text-base sm:text-lg font-bold tracking-wide text-red-600 fade-in-up">The Growing Blessings</p>
             
-            <!-- Main Title (Colored Green) --><h1 class="text-6xl sm:text-8xl md:text-9xl font-normal leading-tight tracking-tight text-green-800 fade-in-up">
+            <!-- Main Title (Restored to "UM2 CONNECT") --><h1 class="text-6xl sm:text-8xl md:text-9xl font-normal leading-tight tracking-tight text-green-800 fade-in-up">
                 UM2<br>CONNECT
             </h1>
             
@@ -170,9 +170,52 @@
         </a>
     </header>
 
-    <!-- 2. ACTION SECTION: Final Decision, Poster, and Buttons --><section id="action-section" class="py-20 bg-white w-full border-t border-red-300">
+    <!-- 2. ACTION SECTION: Rebuilt content blocks (What is UM2 Connect, Gallery, Invitation text, AND RSVP section) -->
+    <section id="action-section" class="py-20 bg-white w-full border-t border-red-300">
         <div class="max-w-3xl mx-auto px-6 text-center">
-            <!-- MODIFIED: Invitation Card/Message --><div class="mb-10 p-8 bg-white rounded-3xl shadow-2xl fade-in-up border border-gray-100">
+
+            <!-- SECTION: What is UM2 Connect - STYLED LIKE REFERENCE IMAGE -->
+            <div class="mb-12 pt-0 pb-10 px-0 fade-in-up max-w-xl mx-auto">
+                <h3 class="text-4xl font-bold text-black mb-6">What is UM2 Connect</h3>
+                <p class="text-xl text-gray-800 leading-relaxed text-center font-normal">
+                    WE GROW, WE LAUGH, AND WE HOLD SPACE FOR ONE ANOTHER. IN THE MIDDLE OF BUSY SCHOOL DAYS AND OVERWHELMING ASSESSMENTS, UM2 CONNECT BECOMES OUR LITTLE REFUGE. A PLACE WHERE STRESS MELTS AWAY, REPLACED BY SMILES, SHARED PRAYERS, AND GENUINE CONNECTION.
+                </p>
+            </div>
+
+            <!-- NEW SECTION: Photo Gallery based on reference image (Full Width within container) -->
+             <div class="w-full max-w-3xl mx-auto px-0 mb-12 fade-in-up">
+                <!-- Large Photo 1 -->
+                <div class="overflow-hidden rounded-xl shadow-lg mb-4">
+                    <img src="/img/post4.jpeg" 
+                         alt="UM2 Connect Group Photo 1" 
+                         class="w-full h-auto object-cover aspect-[4/3]"/>
+                </div>
+                
+                <!-- 2x2 Grid Photos -->
+                <div class="grid grid-cols-2 gap-4 mb-4">
+                    <div class="overflow-hidden rounded-xl shadow-md">
+                        <img src="/img/post1.jpeg" 
+                             alt="UM2 Connect Moment A" 
+                             class="w-full h-auto object-cover aspect-square"/>
+                    </div>
+                    <div class="overflow-hidden rounded-xl shadow-md">
+                        <img src="/img/post2.jpeg" 
+                             alt="UM2 Connect Moment B" 
+                             class="w-full h-auto object-cover aspect-square"/>
+                    </div>
+                    
+                </div>
+
+                <!-- Large Photo 2 -->
+                <div class="overflow-hidden rounded-xl shadow-lg">
+                    <img src="/img/post3.jpeg" 
+                         alt="UM2 Connect Group Photo 2" 
+                         class="w-full h-auto object-cover aspect-[4/3]"/>
+                </div>
+            </div>
+            
+            <!-- MODIFIED: Invitation Card/Message -->
+            <div class="mb-10 p-8 bg-white rounded-3xl shadow-2xl fade-in-up border border-gray-100">
                 <!-- Decorative Header --><div class="mb-6 pb-4 border-b border-red-200">
                     <span class="text-4xl text-green-700 leading-none">🎄</span>
                     <h3 class="text-3xl font-extrabold text-red-600 mt-2">UM2 Christmas Connect</h3>
@@ -186,20 +229,20 @@
             </div>
 
             <!-- MOVED: A2 Size Poster Placeholder - Now a separate element --><div class="max-w-md w-full mx-auto mb-10 overflow-hidden rounded-lg shadow-xl aspect-a2 fade-in-up">
-                <img src="/img/poster4.png" alt="Christmas Event Poster" class="w-full h-full object-contain">
+                <img src="/img/poster3.png" alt="Christmas Event Poster" class="w-full h-full object-contain">
             </div>
             
             <!-- Original Invitation Poster Placeholder (1:1 Aspect Ratio) --><div class="max-w-sm w-full mx-auto mb-10 overflow-hidden rounded-xl shadow-2xl aspect-square fade-in-up">
                 <img src="/img/UM2.png" alt="Christmas Invitation Poster" class="w-full h-full object-cover">
             </div>
 
-            <!-- Status Message (Christmas Green Theme) --><div class="bg-green-100 border-l-4 border-green-600 p-4 mb-8 rounded-lg shadow-md fade-in-up">
+            <!-- Status Message (Christmas Green Theme) - RESTORED --><div class="bg-green-100 border-l-4 border-green-600 p-4 mb-8 rounded-lg shadow-md fade-in-up">
                 <p id="status-message" class="mt-1 text-green-800 font-semibold">
                     Are you ready for some Christmas joy? Let us know if you can join us
                 </p>
             </div>
 
-            <!-- Button Section (Christmas Colors) --><div id="button-container" class="grid grid-cols-2 gap-6 max-w-sm mx-auto fade-in-up">
+            <!-- Button Section (Christmas Colors) - RESTORED --><div id="button-container" class="grid grid-cols-2 gap-6 max-w-sm mx-auto fade-in-up">
                 <button id="btn-yes" onclick="logClick('YES')" 
                         class="w-full py-4 text-white font-bold text-xl rounded-lg shadow-lg 
                                bg-green-700 hover:bg-green-600 transition duration-300 transform hover:scale-[1.05] 
